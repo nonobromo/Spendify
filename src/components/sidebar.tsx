@@ -35,8 +35,8 @@ function SideBar() {
     >
       <SideBarArrow openSideBar={openSideBar} open={open} />
 
-      <SideBarIcon text="Expenses" open={open} icon={<CalendarTodayIcon />} />
       <SideBarIcon text="Home" open={open} icon={<HomeIcon />} />
+      <SideBarIcon text="Report" open={open} icon={<CalendarTodayIcon />} />
       <SideBarIcon text="About" open={open} icon={<HelpIcon />} />
     </Box>
   );

@@ -1,4 +1,4 @@
-import { Avatar, Box } from "@mui/material";
+import {  Box } from "@mui/material";
 import AppIcon from "./icon";
 
 function Navbar() {
@@ -14,7 +14,6 @@ function Navbar() {
       }}
     >
       <AppIcon />
-      <Avatar sx={{ marginRight: "16px" }} />
     </Box>
   );
 }

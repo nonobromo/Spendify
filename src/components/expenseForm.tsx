@@ -48,7 +48,7 @@ const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
     const amount = Number(formData.get("amount"));
     const date = formData.get("date") as string;
     const categoryType = formData.get("category") as ExpensesCategory;
-    if (appState.currentExpenses >= appState.monthlyQuota) {
+    if (appState.currentExpenses + amount > appState.monthlyQuota) {
       alert("you can't spend more than that!");
       return;
     }
@@ -61,6 +61,7 @@ const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
         amount,
         date,
         categoryType,
+        id: crypto.randomUUID()
       },
     });
     console.log(Object.fromEntries(formData));

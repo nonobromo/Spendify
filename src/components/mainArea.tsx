@@ -2,7 +2,7 @@ import { Box, Button, Container, TextField, Typography } from "@mui/material";
 
 import ExpenseCard from "./itemCard";
 import { useExpense } from "../context/expense-context";
-import { FormEvent } from "react";
+import { FormEvent, useEffect } from "react";
 
 function MainArea() {
   function handleMonthlyQouta(e: FormEvent) {
@@ -11,11 +11,14 @@ function MainArea() {
     const formData = new FormData(form);
 
     const monthlyQuota = Number(formData.get("quota"));
-    dispatch({ type: "SET_MONTHLY_EXPENSES", payload: monthlyQuota });
+    dispatch({ type: "SET_MONTHLY_QUOTA", payload: monthlyQuota });
     form.reset();
   }
   const { appState, dispatch } = useExpense();
-  console.log(appState.expenses);
+  useEffect(() => {
+    localStorage.setItem("expenses", JSON.stringify(appState.expenses));
+    localStorage.setItem("monthlyQuota", appState.monthlyQuota.toString());
+  }, [appState.expenses, appState.monthlyQuota]);
   return (
     <Box
       sx={{
@@ -38,16 +41,11 @@ function MainArea() {
         variant="h2"
         sx={{
           fontSize: { xs: "16px", sm: "20px", md: "24px", lg: "30px" },
-
           marginTop: "10px",
         }}
       >
         I have{" "}
-        {appState.monthlyQuota -
-          appState.expenses.reduce(
-            (sum, expense) => sum + expense.amount,
-            0
-          )}{" "}
+        {appState.monthlyQuota - appState.currentExpenses}{" "}
         ₪ left to spend
       </Typography>
       <Box
@@ -79,11 +77,12 @@ function MainArea() {
           padding: 2,
           display: "flex",
           flexDirection: "column",
+          alignItems: "center",
           gap: 4,
         }}
       >
         {appState.expenses.map((expense) => {
-          return <ExpenseCard expense={expense} key={expense.title} />;
+          return <ExpenseCard expense={expense} key={expense.id} />;
         })}
       </Container>
     </Box>

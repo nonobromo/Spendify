@@ -6,6 +6,7 @@ type ExpenseData = {
   amount: number;
   date: string;
   categoryType: string | null;
+  id: string
 };
 
 type AppState = {
@@ -20,10 +21,29 @@ const initialState: AppState = {
   expenses: [],
 };
 
+function init(initial: AppState): AppState {
+  const expensesRaw = localStorage.getItem("expenses");
+  const quotaRaw = localStorage.getItem("monthlyQuota");
+
+  const parsedExpenses = expensesRaw ? JSON.parse(expensesRaw) : [];
+
+  const total = parsedExpenses.reduce(
+    (sum: number, expense: ExpenseData) => sum + expense.amount,
+    0
+  )
+
+  return {
+    ...initial,
+    expenses: parsedExpenses,
+    currentExpenses: total,
+    monthlyQuota: quotaRaw ? parseFloat(quotaRaw) : 0,
+  };
+}
+
 type AppActions =
   | { type: "ADD_EXPENSE"; payload: ExpenseData }
-  | { type: "REMOVE_EXPENSE"; amount: number }
-  | { type: "SET_MONTHLY_EXPENSES"; payload: number };
+  | { type: "REMOVE_EXPENSE"; id: string }
+  | { type: "SET_MONTHLY_QUOTA"; payload: number }
 
 function reducer(state: AppState, action: AppActions): AppState {
   switch (action.type) {
@@ -33,12 +53,16 @@ function reducer(state: AppState, action: AppActions): AppState {
         expenses: [...state.expenses, action.payload],
         currentExpenses: state.currentExpenses + action.payload.amount,
       };
-    case "REMOVE_EXPENSE":
-      return {
-        ...state,
-        currentExpenses: Math.max(0, state.currentExpenses - action.amount),
-      };
-    case "SET_MONTHLY_EXPENSES":
+      case "REMOVE_EXPENSE": {
+        const updatedExpenses = state.expenses.filter((exp) => exp.id !== action.id);
+        const newTotal = updatedExpenses.reduce((sum, exp) => sum + exp.amount, 0);
+        return {
+          ...state,
+          expenses: updatedExpenses,
+          currentExpenses: newTotal,
+        };
+      }
+    case "SET_MONTHLY_QUOTA":
       return {
         ...state,
         monthlyQuota: action.payload,
@@ -57,7 +81,7 @@ const ExpenseContext = createContext<
 >(undefined);
 
 export function ExpenseProvider({ children }: { children: ReactNode }) {
-  const [appState, dispatch] = useReducer(reducer, initialState);
+  const [appState, dispatch] = useReducer(reducer, initialState, init);
 
   return (
     <ExpenseContext.Provider value={{ appState, dispatch }}>

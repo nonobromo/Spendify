@@ -1,4 +1,5 @@
-import { Card, Typography, Box } from "@mui/material";
+import { Card, Typography, Box, Button } from "@mui/material";
+import { useExpense } from "../context/expense-context";
 
 export type ExpenseCardProps = {
   title: string;
@@ -6,6 +7,7 @@ export type ExpenseCardProps = {
   date: string;
   category: string;
   categoryType: string | null;
+  id: string
 };
 
 export default function ExpenseCard({
@@ -13,6 +15,7 @@ export default function ExpenseCard({
 }: {
   expense: ExpenseCardProps;
 }) {
+  const {dispatch} = useExpense()
   return (
     <Card
       sx={{
@@ -62,6 +65,8 @@ export default function ExpenseCard({
         </Typography>
         <Typography color="white">{expense.category}</Typography>
       </Box>
+
+      <Button variant="contained" color="error" onClick={() => dispatch({type: "REMOVE_EXPENSE", id: expense.id})}> Remove</Button>
     </Card>
   );
 }

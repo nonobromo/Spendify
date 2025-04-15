@@ -19,6 +19,7 @@ export default function App() {
         flexDirection: "column",
         backgroundColor: "#F5F5F5  ",
         position: "relative",
+        overflowX: "hidden",
       }}
     >
       <Navbar />
