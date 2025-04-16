@@ -64,7 +64,6 @@ const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
         id: crypto.randomUUID()
       },
     });
-    console.log(Object.fromEntries(formData));
     form.reset();
     setCategory(null);
     setIsOpen(false);

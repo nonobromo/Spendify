@@ -31,7 +31,7 @@ export default function ExpenseCard({
         gap: 2,
       }}
     >
-      <Typography variant="h5">Title: {expense.title}</Typography>
+      <Typography variant="h5" sx={{fontSize: {xs: "16px", sm: "20px", md: "24px", lg: "24px"}}}>Title: {expense.title}</Typography>
       <Typography>Added: {expense.date}</Typography>
       <Box
         sx={{

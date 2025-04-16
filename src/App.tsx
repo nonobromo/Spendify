@@ -1,8 +1,6 @@
 import { Box } from "@mui/material";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import "./index.css";
 import Navbar from "./components/navbar";
-import SideBar from "./components/sidebar";
 
 import MainArea from "./components/mainArea";
 
@@ -23,20 +21,9 @@ export default function App() {
       }}
     >
       <Navbar />
-      <SideBar />
+
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <MainArea />
-        <AddCircleIcon
-          sx={{
-            position: "absolute",
-            bottom: 60,
-            right: 60,
-            color: "#2196F3",
-            fontSize: "48px",
-            cursor: "pointer",
-          }}
-          onClick={() => setIsOpen(true)}
-        />
+        <MainArea setIsOpen={setIsOpen}/>
       </Box>
 
       <ExpenseForm isOpen={isOpen} setIsOpen={setIsOpen} />
