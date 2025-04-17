@@ -19,54 +19,28 @@ export default function ExpenseCard({
   return (
     <Card
       sx={{
-        width: "100%",
-        maxWidth: { xs: "200px", sm: "250px", md: "300px", lg: "100%" },
+        width: "300px",
+        maxWidth: { xs: "280px", sm: "280px", md: "280px", lg: "300px" },
+        height: "180px",
         backgroundColor: "#ffffff",
         color: "#333",
         p: 2,
-        borderRadius: 3,
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
+        borderRadius: "20px",
         display: "flex",
         flexDirection: "column",
-        gap: 2,
+        gap: 1,
+        border: "1px solid black"
       }}
     >
-      <Typography variant="h5" sx={{fontSize: {xs: "16px", sm: "20px", md: "24px", lg: "24px"}}}>Title: {expense.title}</Typography>
-      <Typography>Added: {expense.date}</Typography>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          flexDirection: {
-            xs: "column",
-            sm: "column",
-            md: "column",
-            lg: "row",
-          },
-          marginTop: 2,
-          backgroundColor:
-            expense.categoryType === "Food"
-              ? "#FF7043"
-              : expense.categoryType === "Transportation"
-              ? "#42A5F5"
-              : expense.categoryType === "Utilities"
-              ? "#FFCA28"
-              : expense.categoryType === "Housing"
-              ? "#66BB6A"
-              : expense.categoryType === "Insurance"
-              ? "#AB47BC"
-              : "white",
-          padding: 1,
-          borderRadius: 3,
-        }}
-      >
-        <Typography color="white" component="span">
-          {expense.amount} ₪
-        </Typography>
-        <Typography color="white">{expense.category}</Typography>
+      <Box>
+        <Typography component="span" fontSize="16px" fontWeight="700" >NIS</Typography>
+        <Typography component="span" fontSize="40px" fontWeight="700">{expense.amount}</Typography>
       </Box>
-
-      <Button variant="contained" color="error" onClick={() => dispatch({type: "REMOVE_EXPENSE", id: expense.id})}> Remove</Button>
+      <Typography color="#686868">{expense.title}</Typography>
+      <Box sx={{display: "flex", gap: 5, alignItems: "center", justifyContent: "space-between"}}>
+      <Typography sx={{borderRadius: "20px", fontSize: "16px"}}>{expense.categoryType}</Typography>
+      <Typography>{expense.date}</Typography>
+      </Box>
     </Card>
   );
 }

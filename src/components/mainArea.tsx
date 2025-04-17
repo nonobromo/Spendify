@@ -2,7 +2,6 @@ import { Box, Container,  } from "@mui/material";
 
 import ExpenseCard from "./itemCard";
 import { useExpense } from "../context/expense-context";
-import React, {  useEffect } from "react";
 import QoutaForm from "./qoutaForm";
 import { useCategoryState } from "../context/category-context";
 
@@ -15,10 +14,7 @@ function MainArea({setIsOpen}: MainAreaProps) {
   const { appState } = useExpense();
   const {currentCategory} = useCategoryState()
   const filertedCategories = appState.expenses.filter((expense) => currentCategory === "All" ? appState.expenses : expense.categoryType === currentCategory)
-  useEffect(() => {
-    localStorage.setItem("expenses", JSON.stringify(appState.expenses));
-    localStorage.setItem("monthlyQuota", appState.monthlyQuota.toString());
-  }, [appState.expenses, appState.monthlyQuota]);
+
   
   return (
     <Box

@@ -5,7 +5,7 @@ function AppIcon() {
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <Typography
         sx={{
-          color: "#fff",
+          color: "#000",
           fontWeight: "bold",
           fontSize: "36px",
           marginLeft: "8px",
@@ -14,7 +14,7 @@ function AppIcon() {
       >
         Spendify
       </Typography>
-      <MonetizationOnIcon sx={{ color: "#fff", fontSize: "36px" }} />
+      <MonetizationOnIcon sx={{ color: "#000", fontSize: "36px" }} />
     </Box>
   );
 }

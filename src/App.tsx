@@ -1,32 +1,38 @@
 import { Box } from "@mui/material";
 import "./index.css";
-import Navbar from "./components/navbar";
 
-import MainArea from "./components/mainArea";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ExpenseForm from "./components/expenseForm";
+import AppIcon from "./components/icon";
+import QoutaForm from "./components/qoutaForm";
+import { useExpense } from "./context/expense-context";
+import ExpenseList from "./components/expensesList";
 
 export default function App() {
-  const [isOpen, setIsOpen] = useState(false);
+  const {appState} = useExpense()
+  const [isOpen, setIsOpen] = useState(false)
+  useEffect(() => {
+    localStorage.setItem("expenses", JSON.stringify(appState.expenses));
+    localStorage.setItem("monthlyQuota", appState.monthlyQuota.toString());
+  }, [appState.expenses, appState.monthlyQuota]);
   return (
     <Box
       sx={{
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "#F5F5F5  ",
+        alignItems: "center",
         position: "relative",
         overflowX: "hidden",
       }}
     >
-      <Navbar />
-
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <MainArea setIsOpen={setIsOpen}/>
+      <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", backgroundColor: "#eee", width: "100vw"}}>
+      <AppIcon/>
+      <QoutaForm isOpen={isOpen} setIsOpen={setIsOpen}/>
       </Box>
 
-      <ExpenseForm isOpen={isOpen} setIsOpen={setIsOpen} />
+      <ExpenseForm setIsOpen={setIsOpen} isOpen={isOpen}/>
+      <ExpenseList/>
     </Box>
   );
 }
