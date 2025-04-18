@@ -6,14 +6,6 @@ import { useCategoryState } from "../context/category-context";
 function ExpenseList() {
   const { appState } = useExpense();
   const { currentCategory, setCurrentCategory } = useCategoryState();
-  const categories = [
-    "All",
-    "Food",
-    "Transportation",
-    "Utilities",
-    "Housing",
-    "Insurance",
-  ];
   const filertedCategories = appState.expenses.filter((expense) =>
     currentCategory === "All"
       ? appState.expenses
@@ -29,35 +21,16 @@ function ExpenseList() {
           onChange={(e) => setCurrentCategory(e.target.value)}
           displayEmpty
           name="category"
-          MenuProps={{
-            PaperProps: {
-              sx: {
-                backgroundColor: "#232323",
-                color: "#E0E0E0",
-              },
-            },
-          }}>
-          <MenuItem disabled value="" sx={{ color: "#E0E0E0" }}>
+        >
+          <MenuItem disabled value="">
             Select a Category
           </MenuItem>
-          <MenuItem sx={{ color: "#E0E0E0" }} value="All">
-            All
-          </MenuItem>
-          <MenuItem sx={{ color: "#E0E0E0" }} value="Food">
-            Food & Dining
-          </MenuItem>
-          <MenuItem sx={{ color: "#E0E0E0" }} value="Transportation">
-            Transportation
-          </MenuItem>
-          <MenuItem sx={{ color: "#E0E0E0" }} value="Utilities">
-            Utilities
-          </MenuItem>
-          <MenuItem sx={{ color: "#E0E0E0" }} value="Housing">
-            Housing
-          </MenuItem>
-          <MenuItem sx={{ color: "#E0E0E0" }} value="Insurance">
-            Insurance
-          </MenuItem>
+          <MenuItem value="All">All</MenuItem>
+          <MenuItem value="Food">Food & Dining</MenuItem>
+          <MenuItem value="Transportation">Transportation</MenuItem>
+          <MenuItem value="Utilities">Utilities</MenuItem>
+          <MenuItem value="Housing">Housing</MenuItem>
+          <MenuItem value="Insurance">Insurance</MenuItem>
         </Select>
       </Box>
 
@@ -77,7 +50,8 @@ function ExpenseList() {
           flexDirection: "column",
           alignItems: "center",
           gap: 4,
-        }}>
+        }}
+      >
         {filertedCategories.map((expense) => {
           return <ExpenseCard expense={expense} key={expense.id} />;
         })}

@@ -8,12 +8,13 @@ function AppIcon() {
           fontWeight: "bold",
           fontSize: "36px",
           marginLeft: "8px",
-          color: "#fff",
+          color: "",
         }}
-        component="span">
+        component="span"
+      >
         Spendify
       </Typography>
-      <MonetizationOnIcon sx={{ color: "#fff", fontSize: "36px" }} />
+      <MonetizationOnIcon sx={{ color: "#000", fontSize: "36px" }} />
     </Box>
   );
 }

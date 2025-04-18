@@ -5,6 +5,7 @@ import {
   MenuItem,
   Select,
   TextField,
+  Typography,
 } from "@mui/material";
 import { FormEvent, useState } from "react";
 import Modal from "react-modal";
@@ -37,7 +38,7 @@ export type ExpensesCategory =
 const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
   const [category, setCategory] = useState<ExpensesCategory>(null);
   const { appState, dispatch } = useExpense();
-
+  const [msg, setMsg] = useState<string | null>("");
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
@@ -48,8 +49,14 @@ const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
     const amount = Number(formData.get("amount"));
     const date = formData.get("date") as string;
     const categoryType = formData.get("category") as ExpensesCategory;
+
+    if (!title || !categorySelect || !amount || !date || !categoryType) {
+      setMsg("Fill The Rest Of The Fields");
+      return;
+    }
+
     if (appState.currentExpenses + amount > appState.monthlyQuota) {
-      alert("you can't spend more than that!");
+      setMsg("You Cant Spend More Then That!");
       return;
     }
 
@@ -67,17 +74,20 @@ const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
     form.reset();
     setCategory(null);
     setIsOpen(false);
+    setMsg(null);
   }
   function handleCategoryChange(event: SelectChangeEvent<ExpensesCategory>) {
     setCategory(event.target.value as ExpensesCategory);
   }
-
   return (
     <Modal
       ariaHideApp={false}
       isOpen={isOpen}
-      onRequestClose={() => setIsOpen(false)}
-      shouldCloseOnOverlayClick={false}
+      onRequestClose={() => {
+        setIsOpen(false);
+        setMsg(null);
+      }}
+      shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={false}
       style={{
         overlay: {
@@ -91,14 +101,15 @@ const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
           inset: "unset",
           padding: 0,
           border: "none",
-          background: "none",
+          background: "transparent",
         },
-      }}>
+      }}
+    >
       <Box
         sx={{
           width: { xs: "90vw", sm: "70vw", md: "50vw", lg: "40vw" },
           maxHeight: "90vh",
-          backgroundColor: "#1A1A1A",
+          backgroundColor: "#FFF",
           borderRadius: 2,
           padding: { xs: 2, sm: 3, md: 4 },
           boxShadow: 5,
@@ -107,8 +118,9 @@ const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
           gap: 3,
         }}
         component="form"
-        onSubmit={handleSubmit}>
-        <TextField label="Title" name="title" fullWidth required />
+        onSubmit={handleSubmit}
+      >
+        <TextField label="Title" name="title" fullWidth />
 
         <Box>
           <InputLabel>Category</InputLabel>
@@ -118,14 +130,7 @@ const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
             onChange={handleCategoryChange}
             displayEmpty
             name="category"
-            MenuProps={{
-              PaperProps: {
-                sx: {
-                  backgroundColor: "#232323",
-                  color: "#E0E0E0",
-                },
-              },
-            }}>
+          >
             <MenuItem disabled value="">
               Select a Category
             </MenuItem>
@@ -174,25 +179,20 @@ const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
         )}
 
         <TextField type="number" label="Amount" name="amount" fullWidth />
-        <TextField
-          type="date"
-          name="date"
-          fullWidth
-          // slotProps={{ htmlInput: { min: today } }}
-        />
+        <TextField type="date" name="date" fullWidth />
 
-        <Box sx={{ display: "flex", gap: 2, justifyContent: "flex-end" }}>
-          <Button type="submit" variant="contained" color="success">
-            Add Expense
-          </Button>
-          <Button
-            onClick={() => {
-              setIsOpen(false);
-              setCategory(null);
+        <Box sx={{ display: "flex", alignItems: "flex-end", gap: 2 }}>
+          <Typography
+            sx={{
+              mr: "auto",
+              fontSize: { xs: "16px" },
             }}
-            variant="contained"
-            color="error">
-            Close
+            color="error"
+          >
+            {msg}
+          </Typography>
+          <Button variant="contained" color="success" type="submit">
+            Add Expense
           </Button>
         </Box>
       </Box>
