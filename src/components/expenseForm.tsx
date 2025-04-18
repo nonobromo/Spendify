@@ -179,7 +179,7 @@ const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
         )}
 
         <TextField type="number" label="Amount" name="amount" fullWidth />
-        <TextField type="date" name="date" fullWidth />
+        <TextField type="date" name="date" fullWidth label="Date" />
 
         <Box sx={{ display: "flex", alignItems: "flex-end", gap: 2 }}>
           <Typography
