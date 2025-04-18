@@ -11,7 +11,11 @@ function LeftToSpend() {
         alignItems: "center",
         gap: 3,
         border: "1px solid black",
-        padding: "40px 80px 40px 80px",
+        padding: {
+          xs: "20px 40px 20px 40px",
+          sm: "40px 80px 40px 80px",
+          md: "60px 120px 60px 120px",
+        },
         borderRadius: "20px",
         backgroundColor: "#FFF",
       }}
