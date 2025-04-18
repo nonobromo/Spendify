@@ -61,7 +61,7 @@ const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
         amount,
         date,
         categoryType,
-        id: crypto.randomUUID()
+        id: crypto.randomUUID(),
       },
     });
     form.reset();
@@ -93,13 +93,12 @@ const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
           border: "none",
           background: "none",
         },
-      }}
-    >
+      }}>
       <Box
         sx={{
           width: { xs: "90vw", sm: "70vw", md: "50vw", lg: "40vw" },
           maxHeight: "90vh",
-          backgroundColor: "white",
+          backgroundColor: "#1A1A1A",
           borderRadius: 2,
           padding: { xs: 2, sm: 3, md: 4 },
           boxShadow: 5,
@@ -108,8 +107,7 @@ const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
           gap: 3,
         }}
         component="form"
-        onSubmit={handleSubmit}
-      >
+        onSubmit={handleSubmit}>
         <TextField label="Title" name="title" fullWidth required />
 
         <Box>
@@ -120,7 +118,14 @@ const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
             onChange={handleCategoryChange}
             displayEmpty
             name="category"
-          >
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  backgroundColor: "#232323",
+                  color: "#E0E0E0",
+                },
+              },
+            }}>
             <MenuItem disabled value="">
               Select a Category
             </MenuItem>
@@ -186,8 +191,7 @@ const ExpenseForm = ({ isOpen, setIsOpen }: ExpenseFormProps) => {
               setCategory(null);
             }}
             variant="contained"
-            color="error"
-          >
+            color="error">
             Close
           </Button>
         </Box>

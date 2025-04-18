@@ -10,7 +10,18 @@ function CategorySelect({ options, categoryName, name }: CategorySelectProps) {
   return (
     <Box sx={{ flex: 1 }}>
       <InputLabel>{categoryName}</InputLabel>
-      <Select fullWidth displayEmpty name={name}>
+      <Select
+        fullWidth
+        displayEmpty
+        name={name}
+        MenuProps={{
+          PaperProps: {
+            sx: {
+              backgroundColor: "#232323",
+              color: "#E0E0E0",
+            },
+          },
+        }}>
         <MenuItem disabled value="">
           Select a Category
         </MenuItem>

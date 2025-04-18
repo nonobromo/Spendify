@@ -8,7 +8,7 @@ import { CategoriesStateContext } from "./context/category-context";
 const theme = createTheme({
   typography: {
     allVariants: {
-      color: "#212121",
+      color: "#E0E0E0",
     },
   },
 });
@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ThemeProvider theme={theme}>
       <ExpenseProvider>
         <CategoriesStateContext>
-        <App />
+          <App />
         </CategoriesStateContext>
       </ExpenseProvider>
     </ThemeProvider>
